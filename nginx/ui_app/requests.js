@@ -73,6 +73,7 @@ async function executeDelete(userId, button) {
 
 async function sendPostRequest() {
     const userData = gatherUserData();
+    console.log("Dane użytkownika do wysłania:", userData);
 
     if (!userData.firstName) {
         alert("First name cannot be empty.");
@@ -91,16 +92,18 @@ async function sendPostRequest() {
 
     try {
         const response = await sendRequest(API_URL, userData);
-        const newUsers = await handleResponse(response);
-        console.log(newUsers);
-        displayUsers(newUsers);
+        const newUser = await handleResponse(response);
+        console.log(newUser);
+        getItems();
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Errorr:', error);
     }
 }
 
 async function sendRequest(url, data) {
-    return await fetch(url, {
+    console.log("Wysyłanie żądania POST z danymi:", data);
+
+    const response = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -111,13 +114,19 @@ async function sendRequest(url, data) {
             role: data.role
         })
     });
+    
+    console.log("z serwera w sendRequest:", response);
+    return response;
 }
 
 async function handleResponse(response) {
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return await response.json();
+    
+    const jsonResponse = await response.json();
+    console.log("Odpowiedź JSON z serwera:", jsonResponse);
+    return jsonResponse;
 }
 
 function gatherUserData() {
@@ -141,11 +150,16 @@ function displayUsers(users) {
 
 async function getItems() {
     try {
-        const response = await axios.get(API_URL);
+        const response = await fetch(API_URL);
         console.log(response);
 
-        const users = response.data;
-        displayUsers(users);
+        const users = await response.json();
+        console.log("Lista użytkowników pobrana z serwera:", users);
+        if (Array.isArray(users)) {
+            displayUsers(users);
+        } else {
+            console.error("Blad: Oczekiwano tablicy a otrzymano: ", users)
+        }
     } catch (error) {
         console.error("Error fetching users:", error);
     }
