@@ -78,8 +78,8 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
 
         newUser: dict = {
             # 'id': random.randint(1, 1000000),
-            'first_name': received_data['firstName'],
-            'last_name': received_data['lastName'],
+            'first_name': received_data['first_name'],
+            'last_name': received_data['last_name'],
             'role': received_data['role']
         }
         # self.users.append(newUser)
