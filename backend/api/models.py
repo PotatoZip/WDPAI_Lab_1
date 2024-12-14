@@ -10,6 +10,9 @@ class BusinessUser(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} - {self.role}'
+    
+    # class Meta:
+    #     db_table = "businessuser"
 
 class SystemUser(AbstractUser):
     """
@@ -27,3 +30,6 @@ class SystemUser(AbstractUser):
         related_name="custom_user_permissions_set",  
         blank=True,
     )
+
+    # class Meta:
+    #     db_table = "systemuser"

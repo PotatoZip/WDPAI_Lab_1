@@ -10,7 +10,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     """
     Serializer do rejestracji użytkownika systemowego.
     """
-    password = serializers.CharField(read_only=True)
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = SystemUser
@@ -32,4 +32,4 @@ class SystemUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = SystemUser
-        fields = ['id', 'username' 'password']
+        fields = ['id', 'username', 'email', 'password']
