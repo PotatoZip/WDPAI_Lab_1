@@ -32,4 +32,4 @@ class SystemUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = SystemUser
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'password']
